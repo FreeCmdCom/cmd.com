@@ -22,6 +22,7 @@
             color: #00ff00;
             border: 2px solid #00aa00;
             font-size: 16px;
+            margin-bottom: 10px;
         }
         #run-button {
             padding: 12px 24px;
@@ -30,7 +31,6 @@
             border: none;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 10px;
         }
         #output {
             margin-top: 30px;
@@ -58,7 +58,7 @@
         <input 
             type="text" 
             id="command-input" 
-            placeholder="Попробуй: Bonscik3d, Help, DevelopersLing..."
+            placeholder="Попробуй: Bonscik3d, Help, Music, Flip..."
             autofocus
         >
         <button id="run-button" onclick="runCommand()">Выполнить</button>
@@ -69,6 +69,16 @@
     </div>
 
     <script>
+        // Переменные для игр
+        let secretNumber;
+        let lastCommand = localStorage.getItem("lastCommand") || "";
+
+        // Загрузка последней команды при старте
+        if (lastCommand) {
+            document.getElementById("output").innerHTML = 
+                `Последняя команда: <strong>${lastCommand}</strong>`;
+        }
+
         function runCommand() {
             const input = document.getElementById("command-input");
             const command = input.value.trim().toLowerCase();
@@ -76,7 +86,7 @@
 
             let result = "";
 
-            // Команды
+            // Основные команды
             if (command === "bonscik3d") {
                 result = `
                       ,;;;,
@@ -91,19 +101,16 @@
                 result = `
                     Доступные команды:
                     - Bonscik3d - нарисовать пончик
-                    - Dog - песик
                     - DevelopersLing - контакты разработчика
+                    - Time - текущее время
+                    - Joke - случайная шутка
+                    - Weather - пример погоды
+                    - Cat - ASCII-кот
+                    - Dog - ASCII-собака
+                    - Game - угадай число
+                    - Flip - подбросить монетку
+                    - Music - музыкальный трек
                     - Clear - очистить экран
-                `;
-            }
-            else if (command === "dog") {
-                result = `
-                    / \\__
-                   (    @\\___
-                   /         O
-                  /   (_____/
-                 /_____/   U
-                Пёсик хочет печеньку!
                 `;
             }
             else if (command === "developersling") {
@@ -113,13 +120,77 @@
                     Сайт: cmdFreeCOM (скоро будет!)
                 `;
             }
+            else if (command === "time") {
+                const now = new Date();
+                result = `Сейчас: ${now.toLocaleTimeString()}`;
+            }
+            else if (command === "joke") {
+                const jokes = [
+                    "Почему программист всегда мокрый? Потому что он работает с C# (си-шарп)!",
+                    "Какой язык программирования самый романтичный? Python, потому что он полон змей! 🐍",
+                    "Компьютер не грузится? Попробуйте выключить и включить его... О, вы уже 10 раз это сделали? 😅"
+                ];
+                result = jokes[Math.floor(Math.random() * jokes.length)];
+            }
+            else if (command === "weather") {
+                result = `
+                    Погода в Москве:
+                    ☀️ +18°C, солнечно
+                    Ветер: 5 м/с
+                `;
+            }
+            else if (command === "cat") {
+                result = `
+                    /\\_/\\  
+                   ( o.o )  
+                    > ^ <
+                Кот требует печеньки! 🍪
+                `;
+            }
+            else if (command === "dog") {
+                result = `
+                    / \\__
+                   (    @\\___
+                   /         O
+                  /   (_____/
+                 /_____/   U
+                Пёсик хочет играть! 🐶
+                `;
+            }
+            else if (command === "game") {
+                secretNumber = Math.floor(Math.random() * 10) + 1;
+                result = "Угадай число от 1 до 10! Напиши 'Guess X'.";
+            }
+            else if (command.startsWith("guess ")) {
+                const guess = parseInt(command.split(" ")[1]);
+                if (isNaN(guess)) {
+                    result = "Нужно ввести число! Например: 'Guess 5'";
+                } 
+                else if (guess === secretNumber) {
+                    result = "🎉 Угадал! Это число " + secretNumber;
+                } 
+                else {
+                    result = "Неверно. Попробуй ещё!";
+                }
+            }
+            else if (command === "flip") {
+                result = Math.random() > 0.5 ? "Орёл!" : "Решка!";
+            }
+            else if (command === "music") {
+                result = "🎵 Слушай: https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=2s";
+            }
             else if (command === "clear") {
                 result = "";
+                localStorage.removeItem("lastCommand");
             }
             else {
                 result = `Ошибка: команда "${command}" не найдена. Введи "Help" для списка команд.`;
             }
 
+            // Сохраняем команду и выводим результат
+            if (command !== "clear") {
+                localStorage.setItem("lastCommand", command);
+            }
             output.innerHTML = `<pre>${result}</pre>`;
             input.value = "";
         }
