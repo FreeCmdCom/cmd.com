@@ -1,716 +1,324 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cmdFreeCOM 2.0</title>
+    <title>NewsNov - Official Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-dark: #121212;
-            --text-dark: #00ff00;
-            --bg-light: #f0f0f0;
-            --text-light: #333;
-            --accent: #00aa00;
-            --error: #ff5555;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            font-family: 'Courier New', monospace;
-            background: var(--bg-dark);
-            color: var(--text-dark);
-            max-width: 800px;
+            background: linear-gradient(135deg, #0a0a2a, #1a1a4a, #2d2d5a);
+            color: #f0f0f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 40px 0;
             text-align: center;
-            transition: all 0.3s;
+            animation: fadeIn 1.5s ease-out;
         }
-        
-        body.light-mode {
-            background: var(--bg-light);
-            color: var(--text-light);
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #4a00e0, #8e2de2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
         }
-        
-        #header {
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #a0a0e0;
             margin-bottom: 30px;
         }
-        
-        #command-input {
-            width: 70%;
-            padding: 12px;
-            background: inherit;
-            color: inherit;
-            border: 2px solid var(--accent);
-            font-size: 16px;
-            margin-bottom: 10px;
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            margin: 30px 0;
+            animation: slideUp 1.2s ease-out;
         }
-        
-        #run-button {
-            padding: 12px 24px;
-            background: var(--accent);
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #d0d0ff;
+        }
+
+        .telegram-link {
+            display: inline-block;
+            background: linear-gradient(to right, #0088cc, #00a8e8);
             color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            transition: opacity 0.2s;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4);
         }
-        
-        #run-button:hover {
-            opacity: 0.8;
+
+        .telegram-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.6);
         }
-        
-        #output {
-            margin-top: 30px;
-            white-space: pre-wrap;
-            font-size: 18px;
-            min-height: 200px;
-            border: 1px dashed var(--accent);
+
+        .telegram-link i {
+            margin-right: 10px;
+        }
+
+        .content {
+            padding: 60px 0;
+        }
+
+        .section {
+            background: rgba(10, 10, 40, 0.6);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.3s; }
+        .section:nth-child(2) { animation-delay: 0.6s; }
+        .section:nth-child(3) { animation-delay: 0.9s; }
+        .section:nth-child(4) { animation-delay: 1.2s; }
+
+        .section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: #7b68ee;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h2 i {
+            margin-right: 15px;
+            background: linear-gradient(to right, #7b68ee, #6a5acd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #e0e0ff;
+        }
+
+        .highlight {
+            color: #ff7ae9;
+            font-weight: 600;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .stat-item {
+            text-align: center;
             padding: 20px;
-            text-align: left;
-            overflow-wrap: break-word;
-        }
-        
-        .logo {
-            font-size: 48px;
-            margin-bottom: 10px;
-            color: #00ffaa;
-        }
-        
-        .error {
-            color: var(--error);
-        }
-        
-        .qr-code {
-            max-width: 150px;
-            height: auto;
-            display: block;
-            margin: 10px auto;
-        }
-        
-        .color-box {
-            width: 100px;
-            height: 100px;
-            margin: 10px auto;
-            border: 2px solid #fff;
-        }
-        
-        .progress-bar {
-            height: 20px;
-            background: #333;
-            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
-            overflow: hidden;
+            margin: 10px;
+            flex: 1;
+            min-width: 200px;
+            transition: transform 0.3s ease;
         }
-        
-        .progress-fill {
-            height: 100%;
-            background: var(--accent);
-            width: 0%;
-            transition: width 0.5s;
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #7b68ee;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #a0a0e0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #a0a0e0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 3rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .section { padding: 25px; }
+            .stats { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <div id="header">
-        <div class="logo">cmdFreeCOM 2.0</div>
-        <p>Введите команду (100+ функций!)</p>
-    </div>
+    <div class="container">
+        <header>
+            <div class="logo">NEWSNOV</div>
+            <div class="tagline">Where Innovation Meets Information</div>
+        </header>
 
-    <div>
-        <input 
-            type="text" 
-            id="command-input" 
-            placeholder="Начните с help..."
-            autofocus
-            aria-label="Командная строка"
-        >
-        <button id="run-button" onclick="runCommand()">Выполнить</button>
-    </div>
+        <div class="hero">
+            <h1>Welcome to the Official NewsNov Website</h1>
+            <p>Discover the story behind the Telegram channel managed by a young programmer who created a game with over 10 million users</p>
+            <a href="https://t.me/shark0hub" class="telegram-link" target="_blank">
+                <i class="fab fa-telegram"></i> Join us on Telegram
+            </a>
+        </div>
 
-    <div id="output" aria-live="polite">
-        Добро пожаловать! Введите <strong>help</strong> для списка команд.
+        <div class="content">
+            <div class="section">
+                <h2><i class="fas fa-user"></i> About the Creator</h2>
+                <p>NewsNov is managed by a <span class="highlight">young and talented programmer</span> whose passion for technology and innovation has led to remarkable achievements in the digital world. At a very young age, he demonstrated exceptional skills in coding and game development.</p>
+                <p>His journey began with simple coding experiments and quickly evolved into creating complex applications that captured the attention of millions worldwide. His dedication to quality and user experience sets him apart in the competitive tech industry.</p>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-gamepad"></i> The Game That Reached 10 Million Users</h2>
+                <p>The creator of NewsNov developed a groundbreaking mobile game that <span class="highlight">achieved over 10 million downloads</span> across platforms. This incredible milestone was reached in just under a year, making it one of the most successful indie games of its time.</p>
+                <p>The game features innovative mechanics, stunning visuals, and engaging gameplay that keeps users coming back. It has received numerous positive reviews for its creativity and polish, with an average rating of 4.8 stars across app stores.</p>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">10M+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.8/5</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-newspaper"></i> About NewsNov Channel</h2>
+                <p>NewsNov is a Telegram channel dedicated to sharing the latest news about technology, programming, and innovation. The channel provides valuable insights, tips, and updates from the tech world, curated by someone with firsthand experience in creating successful digital products.</p>
+                <p>Subscribers to NewsNov receive regular updates on:</p>
+                <p>• Latest programming tutorials and resources<br>
+                   • Updates on the creator's projects and games<br>
+                   • News about emerging technologies<br>
+                   • Tips for aspiring developers<br>
+                   • Exclusive behind-the-scenes content</p>
+            </div>
+
+            <div class="section">
+                <h2><i class="fas fa-rocket"></i> Future Projects</h2>
+                <p>The creator is constantly working on new and exciting projects. Currently in development are:</p>
+                <p>• A new mobile game with innovative AR features<br>
+                   • An educational platform for young programmers<br>
+                   • Open-source libraries to help other developers<br>
+                   • A podcast discussing tech trends and programming</p>
+                <p>Subscribe to the NewsNov Telegram channel to stay updated on these exciting developments and be the first to know when new projects are launched!</p>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="https://t.me/shark0hub" class="telegram-link" target="_blank">
+                        <i class="fab fa-telegram"></i> Join NewsNov on Telegram
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 NewsNov | Official Website</p>
+            <p>All rights reserved</p>
+        </footer>
     </div>
 
     <script>
-        // ===== КОНФИГУРАЦИЯ ===== //
-        const VERSION = "2.0";
-        const MAX_HISTORY = 50;
-        
-        // Состояние приложения
-        const state = {
-            secretNumber: null,
-            calculatorMode: false,
-            riddleAnswer: null,
-            todoList: JSON.parse(localStorage.getItem('todo')) || [],
-            theme: localStorage.getItem('theme') || 'dark',
-            gameState: null,
-            timers: {},
-            commandHistory: JSON.parse(localStorage.getItem('cmdHistory')) || [],
-            currentDir: "~",
-            files: {
-                "~": ["readme.txt", "projects/", "secret/"],
-                "~/projects": ["cmdFreeCOM/", "game.js"],
-                "~/secret": ["password.txt"]
-            }
-        };
-
-        // ===== ОСНОВНЫЕ ФУНКЦИИ ===== //
-        function init() {
-            loadHistory();
-            applyTheme();
-            setupEventListeners();
-            checkFirstRun();
-        }
-
-        function checkFirstRun() {
-            if (!localStorage.getItem('firstRun')) {
-                showOutput(`cmdFreeCOM ${VERSION} запущен! Введите <strong>help</strong> для начала.`);
-                localStorage.setItem('firstRun', 'true');
-            }
-        }
-
-        function loadHistory() {
-            if (state.commandHistory.length > 0) {
-                showOutput(`Последняя команда: <strong>${escapeHtml(state.commandHistory[0])}</strong>`);
-            }
-        }
-
-        function applyTheme() {
-            document.body.classList.toggle('light-mode', state.theme === 'light');
-        }
-
-        function setupEventListeners() {
-            const input = document.getElementById("command-input");
-            input.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") runCommand();
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.telegram-link');
+            
+            links.forEach(link => {
+                link.addEventListener('mouseover', () => {
+                    link.style.background = 'linear-gradient(to right, #00a8e8, #0088cc)';
+                });
+                
+                link.addEventListener('mouseout', () => {
+                    link.style.background = 'linear-gradient(to right, #0088cc, #00a8e8)';
+                });
             });
             
-            // Автодополнение при нажатии Tab
-            input.addEventListener("keydown", function(event) {
-                if (event.key === "Tab") {
-                    event.preventDefault();
-                    suggestCommand(input.value.trim());
-                }
+            // Animate stats counting
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalValue = target.textContent;
+                        const duration = 2000;
+                        const steps = 60;
+                        const stepValue = parseInt(finalValue) / steps;
+                        let current = 0;
+                        
+                        const timer = setInterval(() => {
+                            current += stepValue;
+                            if (current >= parseInt(finalValue)) {
+                                target.textContent = finalValue;
+                                clearInterval(timer);
+                            } else {
+                                target.textContent = Math.round(current);
+                            }
+                        }, duration / steps);
+                        
+                        observer.unobserve(target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            statNumbers.forEach(stat => {
+                observer.observe(stat);
             });
-        }
-
-        function escapeHtml(unsafe) {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        function showOutput(content, isError = false) {
-            const output = document.getElementById("output");
-            output.innerHTML = `<pre${isError ? ' class="error"' : ''}>${content}</pre>`;
-        }
-
-        function addToHistory(command) {
-            state.commandHistory.unshift(command);
-            if (state.commandHistory.length > MAX_HISTORY) {
-                state.commandHistory.pop();
-            }
-            localStorage.setItem('cmdHistory', JSON.stringify(state.commandHistory));
-        }
-
-        function suggestCommand(partialCmd) {
-            const commands = getAllCommands();
-            const matches = commands.filter(cmd => cmd.startsWith(partialCmd));
-            
-            if (matches.length === 1) {
-                document.getElementById("command-input").value = matches[0];
-            } else if (matches.length > 1) {
-                showOutput(`Возможные команды: ${matches.join(", ")}`);
-            }
-        }
-
-        function getAllCommands() {
-            return [
-                "help", "clear", "theme", "calc", "todo", "add", "del", 
-                "quiz", "answer", "game", "guess", "anime", "compliment",
-                "fact", "password", "color", "timer", "qr", "emoji", "8ball",
-                "ascii", "translate", "bitcoin", "weather", "joke", "quote",
-                "dice", "flip", "meme", "encrypt", "sysinfo", "bonscik3d",
-                "cat", "dog", "developersling", "time", "music", "ls", "cd",
-                "mkdir", "touch", "rm", "ping", "whoami", "uptime", "date",
-                "calendar", "ip", "browser", "screen", "geo", "battery",
-                "network", "font", "matrix", "starwars", "tetris", "snake",
-                "pong", "tictactoe", "hangman", "rps", "lottery", "coinflip",
-                "roulette", "dart", "sudoku", "chess", "maze", "adventure",
-                "zork", "trivia", "math", "physics", "chemistry", "biology",
-                "history", "art", "poem", "song", "lyrics", "recipe", "cocktail",
-                "train", "flight", "crypto", "stock", "news", "movie", "tvshow",
-                "book", "author", "paint", "draw", "photo", "moon", "sun", "mars",
-                "stars", "universe", "love", "friendship", "wisdom", "secret"
-            ];
-        }
-
-        // ===== ОБРАБОТКА КОМАНД ===== //
-        async function runCommand() {
-            const input = document.getElementById("command-input");
-            const command = input.value.trim();
-            input.value = "";
-            
-            if (!command) {
-                showOutput("Введите команду");
-                return;
-            }
-            
-            try {
-                const result = await processCommand(command);
-                showOutput(result);
-                addToHistory(command);
-            } catch (error) {
-                showOutput(`Ошибка: ${error.message}`, true);
-            }
-        }
-
-        async function processCommand(fullCommand) {
-            const command = fullCommand.toLowerCase();
-            const args = fullCommand.split(" ").slice(1).join(" ");
-            
-            if (state.calculatorMode) {
-                state.calculatorMode = false;
-                try {
-                    return `= ${eval(fullCommand)}`;
-                } catch {
-                    throw new Error("Некорректное выражение");
-                }
-            }
-            
-            // Категории команд
-            const commandCategories = {
-                // Системные
-                system: ["help", "clear", "theme", "sysinfo", "whoami", "uptime"],
-                
-                // Файловая система
-                fs: ["ls", "cd", "mkdir", "touch", "rm"],
-                
-                // Утилиты
-                utils: ["calc", "todo", "add", "del", "password", "color", "timer", 
-                       "qr", "ascii", "encrypt", "ping", "date", "calendar"],
-                
-                // Развлечения
-                fun: ["anime", "compliment", "joke", "quote", "meme", "emoji", 
-                     "fact", "poem", "song", "lyrics", "recipe", "cocktail"],
-                
-                // Игры
-                games: ["game", "guess", "quiz", "answer", "dice", "flip", "8ball",
-                       "rps", "lottery", "roulette", "tictactoe", "hangman", "snake"],
-                
-                // Интернет
-                web: ["translate", "bitcoin", "weather", "crypto", "stock", "news",
-                     "movie", "tvshow", "book", "geo", "ip", "browser"],
-                
-                // Мультимедиа
-                media: ["music", "art", "paint", "draw", "photo", "starwars"],
-                
-                // Наука
-                science: ["math", "physics", "chemistry", "biology", "history"],
-                
-                // Космос
-                space: ["moon", "sun", "mars", "stars", "universe"],
-                
-                // Другое
-                other: ["bonscik3d", "cat", "dog", "developersling", "love", 
-                       "friendship", "wisdom", "secret", "matrix"]
-            };
-
-            // Обработка команд
-            switch (command.split(" ")[0]) {
-                // ===== СИСТЕМНЫЕ ===== //
-                case "help":
-                    return showHelp();
-                    
-                case "clear":
-                    return "";
-                    
-                case "theme":
-                    return setTheme(args);
-                    
-                case "sysinfo":
-                    return getSystemInfo();
-                    
-                case "whoami":
-                    return `Вы: ${navigator.userAgent.split(' ')[0]}...`;
-                    
-                case "uptime":
-                    return `Система работает: ${Math.floor(performance.now() / 1000)} сек`;
-                
-                // ===== ФАЙЛОВАЯ СИСТЕМА ===== //
-                case "ls":
-                    return listFiles();
-                    
-                case "cd":
-                    return changeDir(args);
-                    
-                case "mkdir":
-                    return makeDir(args);
-                    
-                case "touch":
-                    return createFile(args);
-                    
-                case "rm":
-                    return removeFile(args);
-                
-                // ===== УТИЛИТЫ ===== //
-                case "calc":
-                    state.calculatorMode = true;
-                    return "Режим калькулятора. Введите выражение:";
-                    
-                case "todo":
-                    return showTodoList();
-                    
-                case "add":
-                    return addTodoItem(args);
-                    
-                case "del":
-                    return removeTodoItem(args);
-                    
-                case "password":
-                    return generatePassword(args);
-                    
-                case "color":
-                    return showColor(args);
-                    
-                case "timer":
-                    return startTimer(args);
-                    
-                case "qr":
-                    return generateQR(args);
-                    
-                case "ascii":
-                    return textToAscii(args);
-                    
-                case "encrypt":
-                    return encryptText(args);
-                    
-                case "ping":
-                    return `Pong! Задержка: ${Math.floor(Math.random() * 100)}ms`;
-                    
-                case "date":
-                    return new Date().toLocaleDateString();
-                    
-                case "calendar":
-                    return showCalendar();
-                
-                // ===== РАЗВЛЕЧЕНИЯ ===== //
-                case "anime":
-                    return getRandomAnime();
-                    
-                case "compliment":
-                    return getRandomCompliment();
-                    
-                case "joke":
-                    return getRandomJoke();
-                    
-                case "quote":
-                    return getRandomQuote();
-                    
-                case "meme":
-                    return getRandomMeme();
-                    
-                case "emoji":
-                    return getRandomEmoji();
-                    
-                case "fact":
-                    return getRandomFact();
-                    
-                case "poem":
-                    return getRandomPoem();
-                    
-                case "song":
-                    return getRandomSong();
-                    
-                case "lyrics":
-                    return getRandomLyrics();
-                    
-                case "recipe":
-                    return getRandomRecipe();
-                    
-                case "cocktail":
-                    return getRandomCocktail();
-                
-                // ===== ИГРЫ ===== //
-                case "game":
-                    return startNumberGame();
-                    
-                case "guess":
-                    return checkNumberGuess(args);
-                    
-                case "quiz":
-                    return startQuiz();
-                    
-                case "answer":
-                    return checkQuizAnswer(args);
-                    
-                case "dice":
-                    return rollDice();
-                    
-                case "flip":
-                    return flipCoin();
-                    
-                case "8ball":
-                    return magic8Ball();
-                    
-                case "rps":
-                    return playRockPaperScissors(args);
-                    
-                case "lottery":
-                    return generateLotteryNumbers();
-                    
-                case "roulette":
-                    return playRoulette();
-                    
-                case "tictactoe":
-                    return startTicTacToe();
-                    
-                case "hangman":
-                    return startHangman();
-                    
-                case "snake":
-                    return "🐍 Запуск Snake... (в разработке)";
-                
-                // ===== ИНТЕРНЕТ ===== //
-                case "translate":
-                    return translateText(args);
-                    
-                case "bitcoin":
-                    return getBitcoinPrice();
-                    
-                case "weather":
-                    return getWeather();
-                    
-                case "crypto":
-                    return getCryptoPrices();
-                    
-                case "stock":
-                    return getStockInfo();
-                    
-                case "news":
-                    return getLatestNews();
-                    
-                case "movie":
-                    return getRandomMovie();
-                    
-                case "tvshow":
-                    return getRandomTVShow();
-                    
-                case "book":
-                    return getRandomBook();
-                    
-                case "geo":
-                    return getGeoInfo();
-                    
-                case "ip":
-                    return getUserIP();
-                    
-                case "browser":
-                    return getBrowserInfo();
-                
-                // ===== МУЛЬТИМЕДИА ===== //
-                case "music":
-                    return getMusicLink();
-                    
-                case "art":
-                    return getRandomArt();
-                    
-                case "paint":
-                    return "🎨 Виртуальный холст (в разработке)";
-                    
-                case "draw":
-                    return getRandomDrawing();
-                    
-                case "photo":
-                    return getRandomPhoto();
-                    
-                case "starwars":
-                    return getStarWarsQuote();
-                
-                // ===== НАУКА ===== //
-                case "math":
-                    return getMathFact();
-                    
-                case "physics":
-                    return getPhysicsFact();
-                    
-                case "chemistry":
-                    return getChemistryFact();
-                    
-                case "biology":
-                    return getBiologyFact();
-                    
-                case "history":
-                    return getHistoryFact();
-                
-                // ===== КОСМОС ===== //
-                case "moon":
-                    return getMoonPhase();
-                    
-                case "sun":
-                    return getSunInfo();
-                    
-                case "mars":
-                    return getMarsFact();
-                    
-                case "stars":
-                    return getStarInfo();
-                    
-                case "universe":
-                    return getUniverseFact();
-                
-                // ===== ДРУГОЕ ===== //
-                case "bonscik3d":
-                    return getDonutArt();
-                    
-                case "cat":
-                    return getCatArt();
-                    
-                case "dog":
-                    return getDogArt();
-                    
-                case "developersling":
-                    return getDeveloperInfo();
-                    
-                case "time":
-                    return getCurrentTime();
-                    
-                case "love":
-                    return getLoveQuote();
-                    
-                case "friendship":
-                    return getFriendshipQuote();
-                    
-                case "wisdom":
-                    return getWisdomQuote();
-                    
-                case "secret":
-                    return revealSecret();
-                    
-                case "matrix":
-                    return "Подключение к Матрице...";
-                    
-                default:
-                    throw new Error(`Команда не найдена. Введите "help" для списка.`);
-            }
-        }
-
-        // ===== РЕАЛИЗАЦИЯ КОМАНД ===== //
-
-        function showHelp() {
-            return `cmdFreeCOM ${VERSION} - 100+ команд
-
-[СИСТЕМА]
-help       - справка
-clear      - очистить экран
-theme      - сменить тему (dark/light)
-sysinfo    - информация о системе
-whoami     - информация о пользователе
-uptime     - время работы системы
-
-[ФАЙЛЫ]
-ls         - список файлов
-cd         - сменить директорию
-mkdir      - создать папку
-touch      - создать файл
-rm         - удалить файл
-
-[УТИЛИТЫ]
-calc       - калькулятор
-todo       - список дел
-add/del    - управление делами
-password   - генератор паролей
-color      - отображение цвета
-timer      - таймер (5s, 10m)
-qr         - генератор QR-кодов
-ascii      - конвертер в ASCII
-encrypt    - шифрование текста
-ping       - проверить соединение
-date       - текущая дата
-calendar   - календарь
-
-[РАЗВЛЕЧЕНИЯ]
-anime      - рекомендация аниме
-compliment - получить комплимент
-joke       - случайная шутка
-quote      - мудрая цитата
-meme       - случайный мем
-emoji      - случайный эмодзи
-fact       - интересный факт
-poem       - случайное стихотворение
-song       - рекомендация песни
-lyrics     - текст песни
-recipe     - случайный рецепт
-cocktail   - рецепт коктейля
-
-[ИГРЫ]
-game       - угадай число
-quiz       - викторина
-dice       - бросить кубик
-flip       - подбросить монетку
-8ball      - магический шар
-rps        - камень-ножницы-бумага
-lottery    - лотерейные номера
-roulette   - рулетка
-tictactoe  - крестики-нолики
-hangman    - виселица
-snake      - змейка
-
-[ИНТЕРНЕТ]
-translate  - переводчик
-bitcoin    - курс BTC
-weather    - прогноз погоды
-crypto     - курсы криптовалют
-stock      - акции
-news       - последние новости
-movie      - случайный фильм
-tvshow     - случайный сериал
-book       - рекомендация книги
-geo        - геолокация
-ip         - ваш IP-адрес
-browser    - информация о браузере
-
-[МУЛЬТИМЕДИА]
-music      - музыкальный трек
-art        - случайное искусство
-paint      - рисование
-draw       - случайный рисунок
-photo      - случайное фото
-starwars   - цитата из Звёздных Войн
-
-[НАУКА]
-math       - математический факт
-physics    - факт о физике
-chemistry  - факт о химии
-biology    - факт о биологии
-history    - исторический факт
-
-[КОСМОС]
-moon       - фаза луны
-sun        - информация о солнце
-mars       - факты о Марсе
-stars      - информация о звездах
-universe   - факт о вселенной
-
-[ДРУГОЕ]
-bonscik3d  - ASCII-пончик
-cat/dog    - ASCII-животные
-time       - текущее время
-love       - цитата о любви
-friendship - цитата о дружбе
-wisdom     - мудрая мысль
-secret     - секретная команда
-matrix     - войти в матрицу
-
-Введите <strong>help [категория]</strong> для деталей`;
-        }
-
-        // ... (реализация всех команд) ...
-
-        // Запуск приложения
-        init();
+        });
     </script>
 </body>
 </html>
